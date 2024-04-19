@@ -2,38 +2,38 @@ import SwiftUI
 
 struct ContentView: View {
     enum Tab {
-        case films, reviews, journals
+        case books, reviews, journals
     }
     
-    @State private var selectedTab: Tab = .films
+    @State private var selectedTab: Tab = .books
     @State private var selectedRatingIndex = 0
     
-    let movies: [Movie] = [
-        Movie(title: "Inception", rating: 8.8),
-        Movie(title: "The Dark Knight", rating: 9.0),
-        Movie(title: "Pulp Fiction", rating: 8.9),
-        // Add more movies here
+    let books: [Book] = [
+        Book(title: "Wonder", rating: 8.8),
+        Book(title: "The Great Gatsby", rating: 9.0),
+        Book(title: "Harry Potter", rating: 9.9),
+        // Add more books here
     ]
     
-    var filteredMovies: [Movie] {
+    var filteredBooks: [Book] {
         let selectedRating = Double(selectedRatingIndex + 1)
-        return movies.filter { $0.rating >= selectedRating }
+        return books.filter { $0.rating >= selectedRating }
     }
     
     var body: some View {
         NavigationView {
             VStack {
                 Picker(selection: $selectedTab, label: Text("Tab")) {
-                    Text("Films").tag(Tab.films)
+                    Text("Books").tag(Tab.books)
                     Text("Reviews").tag(Tab.reviews)
-                    Text("Personal Journals").tag(Tab.journals)
+                    Text("Personal Journal").tag(Tab.journals)
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
                 
                 switch selectedTab {
-                case .films:
-                    FilmListView(movies: filteredMovies)
+                case .books:
+                    FilmListView(books: filteredBooks)
                 case .reviews:
                     Text("Reviews Tab Content")
                 case .journals:
@@ -73,21 +73,21 @@ struct ContentView: View {
                 }
                 .background(Color.gray.opacity(0.2))
             }
-            .navigationTitle("Letterboxd")
+            .navigationTitle("Quotify")
         }
     }
 }
 
 struct FilmListView: View {
-    let movies: [Movie]
+    let books: [Book]
     
     var body: some View {
-        List(movies) { movie in
-            NavigationLink(destination: MovieDetail(movie: movie)) {
+        List(books) { book in
+            NavigationLink(destination: BookDetail(book: book)) {
                 VStack(alignment: .leading) {
-                    Text(movie.title)
+                    Text(book.title)
                         .font(.headline)
-                    Text("Rating: \(movie.rating)")
+                    Text("Rating: \(book.rating)")
                         .foregroundColor(.gray)
                         .font(.subheadline)
                 }
@@ -96,20 +96,20 @@ struct FilmListView: View {
     }
 }
 
-struct MovieDetail: View {
-    let movie: Movie
+struct BookDetail: View {
+    let book: Book
     
     var body: some View {
         VStack {
-            Text(movie.title)
+            Text(book.title)
                 .font(.title)
-            Text("Rating: \(movie.rating)")
+            Text("Rating: \(book.rating)")
                 .foregroundColor(.gray)
                 .font(.headline)
             Spacer()
         }
         .padding()
-        .navigationTitle(movie.title)
+        .navigationTitle(book.title)
     }
 }
 
@@ -119,7 +119,7 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct Movie: Identifiable {
+struct Book: Identifiable {
     let id = UUID()
     let title: String
     let rating: Double
