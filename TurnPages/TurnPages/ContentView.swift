@@ -7,27 +7,43 @@ struct Movie: Identifiable {
 }
 
 struct ContentView: View {
+    @State private var selectedRatingIndex = 0
+    
     let movies: [Movie] = [
         Movie(title: "Inception", rating: 8.8),
         Movie(title: "The Dark Knight", rating: 9.0),
         Movie(title: "Pulp Fiction", rating: 8.9),
-        // Add more movies here
     ]
+    
+    var filteredMovies: [Movie] {
+        let selectedRating = Double(selectedRatingIndex + 1)
+        return movies.filter { $0.rating >= selectedRating }
+    }
     
     var body: some View {
         NavigationView {
-            List(movies) { movie in
-                NavigationLink(destination: MovieDetail(movie: movie)) {
-                    VStack(alignment: .leading) {
-                        Text(movie.title)
-                            .font(.headline)
-                        Text("Rating: \(movie.rating)")
-                            .foregroundColor(.gray)
-                            .font(.subheadline)
+            VStack {
+                Picker("Rating", selection: $selectedRatingIndex) {
+                    ForEach(0..<10) { index in
+                        Text("\(index + 1)")
                     }
                 }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                
+                List(filteredMovies) { movie in
+                    NavigationLink(destination: MovieDetail(movie: movie)) {
+                        VStack(alignment: .leading) {
+                            Text(movie.title)
+                                .font(.headline)
+                            Text("Rating: \(movie.rating)")
+                                .foregroundColor(.gray)
+                                .font(.subheadline)
+                        }
+                    }
+                }
+                .navigationTitle("Movies")
             }
-            .navigationTitle("Movies")
         }
     }
 }
