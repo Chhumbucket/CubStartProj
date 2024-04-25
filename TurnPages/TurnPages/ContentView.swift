@@ -87,7 +87,7 @@ struct FilmListView: View {
                 VStack(alignment: .leading) {
                     Text(book.title)
                         .font(.headline)
-                    Text("Rating: \(book.rating)")
+                    Text("Rating: \(String(format: "%.1f", book.rating))")
                         .foregroundColor(.gray)
                         .font(.subheadline)
                 }
@@ -103,7 +103,7 @@ struct BookDetail: View {
         VStack {
             Text(book.title)
                 .font(.title)
-            Text("Rating: \(book.rating)")
+            Text("Rating: \(String(format: "%.1f", book.rating))")
                 .foregroundColor(.gray)
                 .font(.headline)
             Spacer()
