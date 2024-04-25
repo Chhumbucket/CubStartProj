@@ -7,6 +7,7 @@ struct ContentView: View {
     
     @State private var selectedTab: Tab = .books
     @State private var selectedRatingIndex = 0
+    @State private var isProfileViewActive = false
     
     let books: [Book] = [
         Book(title: "Wonder", rating: 8.8),
@@ -54,7 +55,7 @@ struct ContentView: View {
                     Spacer()
                     
                     Button(action: {
-                        // Profile Action
+                        self.isProfileViewActive = true
                     }) {
                         Image(systemName: "person")
                         Text("Profile")
@@ -71,6 +72,7 @@ struct ContentView: View {
                     }
                     .padding()
                 }
+                NavigationLink(destination: UserView(), isActive: $isProfileViewActive) { EmptyView() }
             }
             .background(Color(hex: "#E3DCD5"))
             .navigationTitle("Quotify")
