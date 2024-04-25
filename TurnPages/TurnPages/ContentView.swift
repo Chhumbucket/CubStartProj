@@ -71,8 +71,8 @@ struct ContentView: View {
                     }
                     .padding()
                 }
-                .background(Color.gray.opacity(0.2))
             }
+            .background(Color(hex: "#E3DCD5"))
             .navigationTitle("Quotify")
         }
     }
@@ -87,12 +87,15 @@ struct FilmListView: View {
                 VStack(alignment: .leading) {
                     Text(book.title)
                         .font(.headline)
+                        .foregroundColor(.white)
                     Text("Rating: \(String(format: "%.1f", book.rating))")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.white)
                         .font(.subheadline)
                 }
             }
+            .listRowBackground(Color(hex: "774E32")) // Color for each list row
         }
+        .background(Color.clear)
     }
 }
 
