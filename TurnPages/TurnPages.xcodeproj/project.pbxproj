@@ -12,6 +12,7 @@
 		7F25C5702BD224A2008E412C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F25C56F2BD224A2008E412C /* Item.swift */; };
 		7F25C5722BD224A4008E412C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F25C5712BD224A4008E412C /* Assets.xcassets */; };
 		7F25C5762BD224A4008E412C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F25C5752BD224A4008E412C /* Preview Assets.xcassets */; };
+		7F7928B12BDA2C3400056763 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7928B02BDA2C3400056763 /* UserView.swift */; };
 		EC632DCD2BDA1F7900AB909E /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC632DCC2BDA1F7900AB909E /* Color.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,7 @@
 		7F25C5712BD224A4008E412C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F25C5732BD224A4008E412C /* TurnPages.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TurnPages.entitlements; sourceTree = "<group>"; };
 		7F25C5752BD224A4008E412C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7F7928B02BDA2C3400056763 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		EC632DCC2BDA1F7900AB909E /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -58,6 +60,7 @@
 			children = (
 				7F25C56B2BD224A2008E412C /* TurnPagesApp.swift */,
 				7F25C56D2BD224A2008E412C /* ContentView.swift */,
+				7F7928B02BDA2C3400056763 /* UserView.swift */,
 				EC632DCC2BDA1F7900AB909E /* Color.swift */,
 				7F25C56F2BD224A2008E412C /* Item.swift */,
 				7F25C5712BD224A4008E412C /* Assets.xcassets */,
@@ -147,6 +150,7 @@
 			files = (
 				7F25C56E2BD224A2008E412C /* ContentView.swift in Sources */,
 				EC632DCD2BDA1F7900AB909E /* Color.swift in Sources */,
+				7F7928B12BDA2C3400056763 /* UserView.swift in Sources */,
 				7F25C5702BD224A2008E412C /* Item.swift in Sources */,
 				7F25C56C2BD224A2008E412C /* TurnPagesApp.swift in Sources */,
 			);
