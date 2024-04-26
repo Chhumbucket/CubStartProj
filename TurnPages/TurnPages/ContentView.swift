@@ -9,14 +9,14 @@ struct ContentView: View {
     @State private var selectedRatingIndex = 0
     @State private var isProfileViewActive = false
     
-    let books: [Book] = [
-        Book(title: "Wonder", rating: 8.8),
-        Book(title: "The Great Gatsby", rating: 9.0),
-        Book(title: "Harry Potter", rating: 9.9),
+    let books: [TestBook] = [
+        TestBook(title: "Wonder", rating: 8.8),
+        TestBook(title: "The Great Gatsby", rating: 9.0),
+        TestBook(title: "Harry Potter", rating: 9.9),
         // Add more books here
     ]
     
-    var filteredBooks: [Book] {
+    var filteredBooks: [TestBook] {
         let selectedRating = Double(selectedRatingIndex + 1)
         return books.filter { $0.rating >= selectedRating }
     }
@@ -81,7 +81,7 @@ struct ContentView: View {
 }
 
 struct FilmListView: View {
-    let books: [Book]
+    let books: [TestBook]
     
     var body: some View {
         List(books) { book in
@@ -102,7 +102,7 @@ struct FilmListView: View {
 }
 
 struct BookDetail: View {
-    let book: Book
+    let book: TestBook
     
     var body: some View {
         VStack {
@@ -118,13 +118,13 @@ struct BookDetail: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct ContentView_Previews0: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
 }
 
-struct Book: Identifiable {
+struct TestBook: Identifiable {
     let id = UUID()
     let title: String
     let rating: Double
