@@ -7,7 +7,8 @@ struct ContentView: View {
     
     @State private var selectedTab: Tab = .books
     @State private var selectedRatingIndex = 0
-    @State private var isProfileViewActive = false
+    @State private var showingBookListView = false
+    @State private var showingUserView = false
     
     let books: [TestBook] = [
         TestBook(title: "Wonder", rating: 8.8),
@@ -15,6 +16,9 @@ struct ContentView: View {
         TestBook(title: "Harry Potter", rating: 9.9),
         // Add more books here
     ]
+    let reviews: [Review] = [
+            // Example reviews
+            Review(bookTitle: "Wonder", author: "R.J. Palacio", rating: 10, content: "An inspiring story that will definitely make you cry! Would recommend.")]
     
     var filteredBooks: [TestBook] {
         let selectedRating = Double(selectedRatingIndex + 1)
@@ -36,16 +40,16 @@ struct ContentView: View {
                 case .books:
                     FilmListView(books: filteredBooks)
                 case .reviews:
-                    Text("Reviews Tab Content")
+                    ReviewsListView(reviews: reviews)
                 case .journals:
-                    Text("Personal Journals Tab Content")
+                    JournalView()
                 }
                 
                 Spacer()
                 
                 HStack {
                     Button(action: {
-                        // Main Menu Action
+                        // Action
                     }) {
                         Image(systemName: "house")
                         Text("Main Menu")
@@ -55,24 +59,29 @@ struct ContentView: View {
                     Spacer()
                     
                     Button(action: {
-                        self.isProfileViewActive = true
+                        showingUserView = true
                     }) {
                         Image(systemName: "person")
                         Text("Profile")
                     }
                     .padding()
+                    .sheet(isPresented: $showingUserView) {
+                        UserView(isPresented: $showingUserView)
+                    }
                     
                     Spacer()
                     
                     Button(action: {
-                        // Search Action
+                        showingBookListView = true
                     }) {
                         Image(systemName: "magnifyingglass")
                         Text("Search")
                     }
                     .padding()
+                    .sheet(isPresented: $showingBookListView) {
+                        BookListView(isPresented: $showingBookListView)
+                    }
                 }
-                NavigationLink(destination: UserView(), isActive: $isProfileViewActive) { EmptyView() }
             }
             .background(Color(hex: "#E3DCD5"))
             .navigationTitle("Quotify")
@@ -116,6 +125,39 @@ struct BookDetail: View {
         .padding()
         .navigationTitle(book.title)
     }
+}
+struct ReviewsListView: View {
+    let reviews: [Review]
+    
+    var body: some View {
+        List(reviews) { review in
+            VStack(alignment: .leading) {
+                Text("New Review")
+                    .font(.title2)
+                    .bold()
+            }
+            Spacer()
+            VStack(alignment: .leading) {
+                Text("Previous Reviews")
+                    .font(.title2)
+                    .bold()
+            }
+                VStack(alignment: .leading) {
+                    Text(review.bookTitle).font(.headline)
+                    Text(review.author).font(.subheadline)
+                    Text("Rating: \(String(repeating: "★", count: review.rating))").foregroundColor(.yellow)
+                    Text(review.content).font(.body)
+                }
+            }
+    }
+}
+
+struct Review: Identifiable {
+    let id = UUID()
+    let bookTitle: String
+    let author: String
+    let rating: Int
+    let content: String
 }
 
 struct ContentView_Previews0: PreviewProvider {
