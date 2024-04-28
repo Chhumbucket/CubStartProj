@@ -13,6 +13,7 @@ struct UserView: View {
     }
     
     @State private var selectedTab: Tab = .books
+    @Binding var isPresented: Bool
     
     
     var body: some View {
@@ -42,7 +43,7 @@ struct UserView: View {
             }
             HStack {
                 Button(action: {
-                    // Main Menu Action
+                    isPresented = false
                 }) {
                     Image(systemName: "house")
                     Text("Main Menu")
@@ -83,5 +84,5 @@ struct UserActivity: View {
 }
 
 #Preview {
-    UserView()
+    UserView(isPresented: .constant(false))
 }

@@ -3,6 +3,7 @@ import SwiftUI
 struct BookListView: View {
     @StateObject var viewModel = BookViewModel()
     @State private var searchText = ""
+    @Binding var isPresented: Bool
     
     var body: some View {
         NavigationView {
@@ -15,6 +16,35 @@ struct BookListView: View {
                     }
                 }
                 .navigationTitle("Book Manager")
+                HStack {
+                    Button(action: {
+                        isPresented = false
+                    }) {
+                        Image(systemName: "house")
+                        Text("Main Menu")
+                    }
+                    .padding()
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        // Profile Action
+                    }) {
+                        Image(systemName: "person")
+                        Text("Profile")
+                    }
+                    .padding()
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        // Search Action
+                    }) {
+                        Image(systemName: "magnifyingglass")
+                        Text("Search")
+                    }
+                    .padding()
+                }
             }
         }
     }
@@ -90,6 +120,7 @@ struct BookDetailView: View {
 
 struct SearchBar: View {
     @Binding var text: String
+
     var onSearch: () -> Void
     
     var body: some View {
@@ -108,6 +139,6 @@ struct SearchBar: View {
 
 struct ContentView_Previews1: PreviewProvider {
     static var previews: some View {
-        BookListView()
+        BookListView(isPresented: .constant(false))
     }
 }

@@ -16,6 +16,7 @@
 		7F7928B52BDA54DF00056763 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7928B42BDA54DF00056763 /* Book.swift */; };
 		7F7928B72BDA550900056763 /* NameNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7928B62BDA550900056763 /* NameNow.swift */; };
 		7F7928B92BDA559700056763 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7928B82BDA559700056763 /* TestView.swift */; };
+		EC61A94C2BDCC1280041E1EE /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC61A94B2BDCC1280041E1EE /* JournalView.swift */; };
 		EC632DCD2BDA1F7900AB909E /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC632DCC2BDA1F7900AB909E /* Color.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		7F7928B42BDA54DF00056763 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		7F7928B62BDA550900056763 /* NameNow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameNow.swift; sourceTree = "<group>"; };
 		7F7928B82BDA559700056763 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		EC61A94B2BDCC1280041E1EE /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalView.swift; sourceTree = "<group>"; };
 		EC632DCC2BDA1F7900AB909E /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,6 +70,7 @@
 				7F5ABFC22BDC794B00CDC947 /* Info.plist */,
 				7F25C56B2BD224A2008E412C /* TurnPagesApp.swift */,
 				7F25C56D2BD224A2008E412C /* ContentView.swift */,
+				EC61A94B2BDCC1280041E1EE /* JournalView.swift */,
 				7F7928B02BDA2C3400056763 /* UserView.swift */,
 				7F7928B42BDA54DF00056763 /* Book.swift */,
 				7F7928B62BDA550900056763 /* NameNow.swift */,
@@ -165,6 +168,7 @@
 				7F7928B12BDA2C3400056763 /* UserView.swift in Sources */,
 				7F7928B92BDA559700056763 /* TestView.swift in Sources */,
 				7F7928B72BDA550900056763 /* NameNow.swift in Sources */,
+				EC61A94C2BDCC1280041E1EE /* JournalView.swift in Sources */,
 				7F25C5702BD224A2008E412C /* Item.swift in Sources */,
 				7F25C56C2BD224A2008E412C /* TurnPagesApp.swift in Sources */,
 			);
