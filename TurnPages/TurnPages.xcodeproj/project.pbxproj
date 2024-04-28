@@ -27,6 +27,7 @@
 		7F25C5712BD224A4008E412C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F25C5732BD224A4008E412C /* TurnPages.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TurnPages.entitlements; sourceTree = "<group>"; };
 		7F25C5752BD224A4008E412C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7F5ABFC22BDC794B00CDC947 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7F7928B02BDA2C3400056763 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		7F7928B42BDA54DF00056763 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		7F7928B62BDA550900056763 /* NameNow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameNow.swift; sourceTree = "<group>"; };
@@ -64,6 +65,7 @@
 		7F25C56A2BD224A2008E412C /* TurnPages */ = {
 			isa = PBXGroup;
 			children = (
+				7F5ABFC22BDC794B00CDC947 /* Info.plist */,
 				7F25C56B2BD224A2008E412C /* TurnPagesApp.swift */,
 				7F25C56D2BD224A2008E412C /* ContentView.swift */,
 				7F7928B02BDA2C3400056763 /* UserView.swift */,
@@ -298,6 +300,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TurnPages/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -336,6 +339,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TurnPages/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
