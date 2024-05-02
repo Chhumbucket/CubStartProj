@@ -6,4 +6,6 @@ struct Book: Identifiable {
     let authors: [String]
     let description: String
     let thumbnailURL: URL?
+    let rating: Int
+    let ratingCount: Int
 }

@@ -7,22 +7,15 @@ struct ContentView: View {
     
     @State private var selectedTab: Tab = .books
     @State private var selectedRatingIndex = 0
-    @State private var showingBookListView = false
+    @State private var showingSearchView = false
     @State private var showingUserView = false
     
-    let books: [TestBook] = [
-        TestBook(title: "Wonder", rating: 8.8),
-        TestBook(title: "The Great Gatsby", rating: 9.0),
-        TestBook(title: "Harry Potter", rating: 9.9),
-        // Add more books here
-    ]
-    let reviews: [Review] = [
-            // Example reviews
-            Review(bookTitle: "Wonder", author: "R.J. Palacio", rating: 10, content: "An inspiring story that will definitely make you cry! Would recommend.")]
+    // Mock array of books
+    let books: [Book] = []
     
-    var filteredBooks: [TestBook] {
+    var filteredBooks: [Book] {
         let selectedRating = Double(selectedRatingIndex + 1)
-        return books.filter { $0.rating >= selectedRating }
+        return books.filter { $0.rating >= Int(selectedRating) }
     }
     
     var body: some View {
@@ -38,9 +31,9 @@ struct ContentView: View {
                 
                 switch selectedTab {
                 case .books:
-                    FilmListView(books: filteredBooks)
+                    BookView(books: filteredBooks)
                 case .reviews:
-                    ReviewsListView(reviews: reviews)
+                    userReviewView()
                 case .journals:
                     JournalView()
                 }
@@ -49,7 +42,7 @@ struct ContentView: View {
                 
                 HStack {
                     Button(action: {
-                        // Action
+                        // Action for Main Menu button
                     }) {
                         Image(systemName: "house")
                         Text("Main Menu")
@@ -66,22 +59,25 @@ struct ContentView: View {
                     }
                     .padding()
                     .sheet(isPresented: $showingUserView) {
+                        // Display UserView here
                         UserView(isPresented: $showingUserView)
                     }
                     
                     Spacer()
                     
                     Button(action: {
-                        showingBookListView = true
+                        showingSearchView = true
                     }) {
                         Image(systemName: "magnifyingglass")
                         Text("Search")
                     }
                     .padding()
-                    .sheet(isPresented: $showingBookListView) {
-                        BookListView(isPresented: $showingBookListView)
+                    .sheet(isPresented: $showingSearchView) {
+                        // Display BookListView here
+                        SearchView(isPresented: $showingSearchView)
                     }
                 }
+                .background(Color.gray.opacity(0.2))
             }
             .background(Color(hex: "#E3DCD5"))
             .navigationTitle("Quotify")
@@ -89,8 +85,39 @@ struct ContentView: View {
     }
 }
 
-struct FilmListView: View {
-    let books: [TestBook]
+struct userReviewView: View {
+    @State private var userManager = FdManager()
+    
+    var body: some View {
+            List(userManager.users) { user in
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(user.name)
+                        .font(.headline)
+                    
+                    ForEach(user.reviews, id: \.self) { review in
+                        VStack(alignment: .leading) {
+                            Text("Book: \(review.book)")
+                                .font(.subheadline)
+                            Text("Author: \(review.author)")
+                                .font(.subheadline)
+                            Text("Rating: \(review.rating)")
+                                .font(.subheadline)
+                            Text("Review: \(review.review)")
+                                .font(.subheadline)
+                        }
+                    }
+                }
+                .padding()
+            }
+            .task {
+                await userManager.fetchAllUsers()
+            }
+        }
+    }
+
+
+struct BookView: View {
+    let books: [Book]
     
     var body: some View {
         List(books) { book in
@@ -111,7 +138,7 @@ struct FilmListView: View {
 }
 
 struct BookDetail: View {
-    let book: TestBook
+    let book: Book
     
     var body: some View {
         VStack {
@@ -126,48 +153,9 @@ struct BookDetail: View {
         .navigationTitle(book.title)
     }
 }
-struct ReviewsListView: View {
-    let reviews: [Review]
-    
-    var body: some View {
-        List(reviews) { review in
-            VStack(alignment: .leading) {
-                Text("New Review")
-                    .font(.title2)
-                    .bold()
-            }
-            Spacer()
-            VStack(alignment: .leading) {
-                Text("Previous Reviews")
-                    .font(.title2)
-                    .bold()
-            }
-                VStack(alignment: .leading) {
-                    Text(review.bookTitle).font(.headline)
-                    Text(review.author).font(.subheadline)
-                    Text("Rating: \(String(repeating: "★", count: review.rating))").foregroundColor(.yellow)
-                    Text(review.content).font(.body)
-                }
-            }
-    }
-}
 
-struct Review: Identifiable {
-    let id = UUID()
-    let bookTitle: String
-    let author: String
-    let rating: Int
-    let content: String
-}
-
-struct ContentView_Previews0: PreviewProvider {
+struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
-}
-
-struct TestBook: Identifiable {
-    let id = UUID()
-    let title: String
-    let rating: Double
 }

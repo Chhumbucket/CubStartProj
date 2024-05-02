@@ -22,7 +22,9 @@ class BookViewModel: ObservableObject {
                              title: $0.volumeInfo.title,
                              authors: $0.volumeInfo.authors ?? [],
                              description: $0.volumeInfo.description ?? "",
-                             thumbnailURL: URL(string: $0.volumeInfo.imageLinks?.thumbnail ?? ""))
+                             thumbnailURL: URL(string: $0.volumeInfo.imageLinks?.thumbnail ?? ""),
+                             rating: $0.volumeInfo.rating ?? 0,
+                             ratingCount: $0.volumeInfo.ratingCount ?? 0)
                     }
                   })
             .store(in: &cancellables)
@@ -43,6 +45,8 @@ struct VolumeInfo: Codable {
     let authors: [String]?
     let description: String?
     let imageLinks: ImageLinks?
+    let rating: Int?
+    let ratingCount: Int?
 }
 
 struct ImageLinks: Codable {

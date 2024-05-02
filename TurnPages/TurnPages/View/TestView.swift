@@ -1,6 +1,7 @@
 import SwiftUI
+import Combine
 
-struct BookListView: View {
+struct SearchView: View {
     @StateObject var viewModel = BookViewModel()
     @State private var searchText = ""
     @Binding var isPresented: Bool
@@ -16,6 +17,8 @@ struct BookListView: View {
                     }
                 }
                 .navigationTitle("Book Manager")
+                .listStyle(PlainListStyle()) // Use PlainListStyle to remove default list appearance
+                
                 HStack {
                     Button(action: {
                         isPresented = false
@@ -56,13 +59,12 @@ struct BookListView: View {
 
 struct BookRow: View {
     let book: Book
+    @State private var image: UIImage? = nil // State variable to hold the downloaded image
     
     var body: some View {
         HStack {
-            if let thumbnailURL = book.thumbnailURL,
-               let imageData = try? Data(contentsOf: thumbnailURL),
-               let thumbnail = UIImage(data: imageData) {
-                Image(uiImage: thumbnail)
+            if let image = image {
+                Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 50)
@@ -71,6 +73,9 @@ struct BookRow: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 50)
+                    .onAppear {
+                        loadImage(from: book.thumbnailURL)
+                    }
             }
             VStack(alignment: .leading) {
                 Text(book.title)
@@ -80,6 +85,17 @@ struct BookRow: View {
             }
         }
     }
+    
+    private func loadImage(from url: URL?) {
+        guard let url = url else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            DispatchQueue.main.async {
+                self.image = UIImage(data: data)
+            }
+        }.resume()
+    }
 }
 
 struct BookDetailView: View {
@@ -88,19 +104,7 @@ struct BookDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                if let thumbnailURL = book.thumbnailURL,
-                   let imageData = try? Data(contentsOf: thumbnailURL),
-                   let thumbnail = UIImage(data: imageData) {
-                    Image(uiImage: thumbnail)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 200, height: 300)
-                } else {
-                    Image(systemName: "book")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 200, height: 300)
-                }
+                BookImageView(thumbnailURL: book.thumbnailURL)
                 
                 Text(book.title)
                     .font(.title)
@@ -111,10 +115,66 @@ struct BookDetailView: View {
                 
                 Text(book.description)
                     .padding(.top, 20)
+                
+                Text("\(book.rating)")
+                    .padding(.top, 20)
+                
+                Text("\(book.ratingCount)")
+                    .padding(.top, 20)
             }
             .padding()
         }
         .navigationTitle(book.title)
+        .navigationBarItems(trailing:
+                        NavigationLink(destination: AddReviewView(book: book)) {
+                            Image(systemName: "plus")
+                        }
+                    )
+    }
+}
+
+struct BookImageView: View {
+    let thumbnailURL: URL?
+    @State private var image: UIImage? = nil
+    
+    var body: some View {
+        Group {
+            if let image = image {
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 200, height: 300)
+            } else {
+                Image(systemName: "book")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 200, height: 300)
+                    .onAppear {
+                        loadImage(from: thumbnailURL)
+                    }
+            }
+        }
+    }
+    
+    private func loadImage(from url: URL?) {
+        guard let url = url else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            DispatchQueue.main.async {
+                self.image = UIImage(data: data)
+            }
+        }.resume()
+    }
+}
+
+struct AddReviewView: View {
+    let book: Book
+    
+    var body: some View {
+        Text("Add Review for \(book.title)")
+            .padding()
+            .navigationTitle("Add Review")
     }
 }
 
@@ -139,6 +199,6 @@ struct SearchBar: View {
 
 struct ContentView_Previews1: PreviewProvider {
     static var previews: some View {
-        BookListView(isPresented: .constant(false))
+        SearchView(isPresented: .constant(false))
     }
 }
