@@ -182,8 +182,8 @@ struct AddReviewView: View {
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         
                         Button(action: {
-                            userManager.addBook(user: "Nicolette", book: book, rate: Int(rating) ?? 10)
-                            userManager.addReview(user: "Nicolette", book: book, review: review, rating: Int(rating) ??  10)
+                            userManager.addBook(user: "Dylan", book: book, rate: Int(rating) ?? 10)
+                            userManager.addReview(user: "Dylan", book: book, review: review, rating: Int(rating) ??  10)
                     
                             review = ""
                             rating = ""

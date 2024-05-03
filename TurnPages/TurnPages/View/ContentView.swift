@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     enum Tab {
-        case books, reviews, journals
+        case books, reviews
     }
     
     @State private var selectedTab: Tab = .books
@@ -10,7 +10,7 @@ struct ContentView: View {
     @State private var showingSearchView = false
     @State private var showingUserView = false
     
-    // Mock array of books
+    
     let books: [Book] = []
     
     var filteredBooks: [Book] {
@@ -24,7 +24,6 @@ struct ContentView: View {
                 Picker(selection: $selectedTab, label: Text("Tab")) {
                     Text("Books").tag(Tab.books)
                     Text("Reviews").tag(Tab.reviews)
-                    Text("Personal Journal").tag(Tab.journals)
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
@@ -34,8 +33,7 @@ struct ContentView: View {
                     BookView(books: filteredBooks)
                 case .reviews:
                     UserReviewView()
-                case .journals:
-                    JournalView()
+
                 }
                 
                 Spacer()

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserView: View {
     enum Tab {
-        case books, reviews, journals
+        case books, reviews
     }
     
     @State private var selectedTab: Tab = .books
@@ -21,7 +21,6 @@ struct UserView: View {
             Picker(selection: $selectedTab, label: Text("Tab")) {
                 Text("Books").tag(Tab.books)
                 Text("Reviews").tag(Tab.reviews)
-                Text("Personal Journal").tag(Tab.journals)
             }
             
             .pickerStyle(SegmentedPickerStyle())

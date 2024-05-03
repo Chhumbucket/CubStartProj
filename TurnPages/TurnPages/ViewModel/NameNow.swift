@@ -2,7 +2,7 @@ import SwiftUI
 import Combine
 
 class BookViewModel: ObservableObject {
-    var books: [Book] = []
+    @Published var books: [Book] = []
     
     
     init(books: [Book] = [Book]()) {
