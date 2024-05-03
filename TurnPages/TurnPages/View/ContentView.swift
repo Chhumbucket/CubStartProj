@@ -10,14 +10,6 @@ struct ContentView: View {
     @State private var showingSearchView = false
     @State private var showingUserView = false
     
-    
-    let books: [Book] = []
-    
-    var filteredBooks: [Book] {
-        let selectedRating = Double(selectedRatingIndex + 1)
-        return books.filter { $0.rating >= Int(selectedRating) }
-    }
-    
     var body: some View {
         NavigationView {
             VStack {
@@ -30,7 +22,7 @@ struct ContentView: View {
                 
                 switch selectedTab {
                 case .books:
-                    BookView(books: filteredBooks)
+                    BookView()
                 case .reviews:
                     UserReviewView()
 
@@ -155,10 +147,10 @@ struct UserReviewView: View {
 
 
 struct BookView: View {
-    let books: [Book]
+    @State private var userManager = FdManager()
     
     var body: some View {
-        List(books) { book in
+        List(userManager.savedBooks) { book in
             NavigationLink(destination: BookDetail(book: book)) {
                 VStack(alignment: .leading) {
                     Text(book.title)
@@ -172,11 +164,14 @@ struct BookView: View {
             .listRowBackground(Color(hex: "774E32")) // Color for each list row
         }
         .background(Color.clear)
+        .onAppear {
+            userManager.addSnapshotListenerToBook()
+        }
     }
 }
 
 struct BookDetail: View {
-    let book: Book
+    let book: SavedBook
     
     var body: some View {
         VStack {

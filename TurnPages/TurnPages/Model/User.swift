@@ -23,6 +23,13 @@ struct Review: Codable, Hashable {
     var thumbnailUrl: String
 }
 
-
+struct SavedBook: Identifiable, Codable {
+    var id: String
+    var title: String
+    var authors: [String]
+    var description: String
+    var thumbnailUrl: String
+    var rating: Int
+}
 
 
