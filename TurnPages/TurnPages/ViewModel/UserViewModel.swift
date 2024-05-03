@@ -13,11 +13,11 @@ import FirebaseFirestore
 @Observable class FdManager {
     private let db = Firestore.firestore()
     var users = [User]()
-    var savedBooks = [SavedBook]()
+    var dummys = [Dummy]()
     
-    init(users: [User] = [User](), savedBooks: [SavedBook] = [SavedBook]()) {
+    init(users: [User] = [User](), dummys: [Dummy] = [Dummy]()) {
         self.users = users
-        self.savedBooks = savedBooks
+        self.dummys = dummys
     }
     
      func fetchAllUsers() async{
@@ -113,16 +113,16 @@ import FirebaseFirestore
     func fetchAllBooks() async{
        do {
          let querySnapshot = try await db.collection("books").getDocuments()
-         var fetchedBooks = [SavedBook]()
+         var fetchedBooks = [Dummy]()
          for document in querySnapshot.documents {
              do {
-                 let fetchedBook = try document.data(as: SavedBook.self)
+                 let fetchedBook = try document.data(as: Dummy.self)
                  fetchedBooks.append(fetchedBook)
              } catch {
                  print("Firestore \(error)")
              }
          }
-           savedBooks.append(contentsOf: fetchedBooks)
+           dummys.append(contentsOf: fetchedBooks)
        } catch {
          print("Error getting documents: \(error)")
        }
@@ -134,17 +134,17 @@ import FirebaseFirestore
              print("Error fetching documents: \(error!)")
              return
            }
-           var fetchedBooks = [SavedBook]()
+           var fetchedBooks = [Dummy]()
            for document in documents {
                do {
-                   let fetchedBook = try document.data(as: SavedBook.self)
+                   let fetchedBook = try document.data(as: Dummy.self)
                    fetchedBooks.append(fetchedBook)
                } catch {
                    print("Firestore \(error)")
                }
            }
-           self.savedBooks.removeAll()
-           self.savedBooks.append(contentsOf: fetchedBooks)
+           self.dummys.removeAll()
+           self.dummys.append(contentsOf: fetchedBooks)
          }
    }
     

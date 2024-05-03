@@ -163,18 +163,44 @@ struct BookView: View {
     @State private var userManager = FdManager()
     
     var body: some View {
-        List(userManager.savedBooks) { book in
-            NavigationLink(destination: BookDetail(book: book)) {
-                VStack(alignment: .leading) {
-                    Text(book.title)
-                        .font(.headline)
-                        .foregroundColor(.white)
-                    Text("Rating: \(String(format: "%.1f", book.rating))")
-                        .foregroundColor(.white)
-                        .font(.subheadline)
+        List(userManager.dummys) { dummy in
+            ForEach(dummy.savedBooks) {book in
+                
+                NavigationLink(destination: BookDetail(book: book)) {
+                    HStack() {
+                        AsyncImage(url: URL(string: book.thumbnailUrl)) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(width: 50, height: 50)
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 50, height: 50)
+                            case .failure:
+                                Image(systemName: "book")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 50, height: 50)
+                            @unknown default:
+                                ProgressView()
+                                    .frame(width: 50, height: 50)
+                            }
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text(book.title)
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            Text("Author: \(book.authors.joined(separator: ", "))")
+                                .font(.subheadline)
+                                .foregroundColor(.white)
+                        }
+                    }
                 }
+                .listRowBackground(Color(hex: "774E32"))
             }
-            .listRowBackground(Color(hex: "774E32")) // Color for each list row
         }
         .background(Color.clear)
         .onAppear {
