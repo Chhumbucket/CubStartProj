@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct UserView: View {
+    @State private var profileInfo: String = ""
     enum Tab {
         case books, reviews
     }
@@ -18,27 +19,36 @@ struct UserView: View {
     
     var body: some View {
         VStack {
-            Picker(selection: $selectedTab, label: Text("Tab")) {
-                Text("Books").tag(Tab.books)
-                Text("Reviews").tag(Tab.reviews)
+            Text("Profile")
+                .font(.custom("Georgia", size: 50))
+                .foregroundColor(Color(hex: "#6F4E37"))
+                .padding(.top, 16)
+            
+            ZStack {
+                Circle()
+                    .fill(Color(hex: "#B7825F"))
+                    .frame(width: 120, height: 120)
+                Image(systemName: "person.crop.circle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 90, height: 90)
+                    .foregroundColor(Color(hex: "#774E32"))
             }
             
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
-            
-            Image(systemName: "person.crop.circle")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 100, height: 100)
+            Text("@username")
+                .font(.custom("Georgia", size: 25))
+                .foregroundColor(Color(hex: "#774E32"))
             
             NavigationView {
-                List{
-                    NavigationLink(destination: UserActivity()) {
-                        Text("Film")
-                    }
-                    Text("Hi")
-                    
-                }
+                TextEditor(text: $profileInfo)
+                    .frame(minHeight: 25, maxHeight: 280)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 340)
+                    .frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, minHeight: 200, idealHeight: 300, maxHeight: .infinity)
+                    .background(Color(hex: "#C0A891"))
+                    .cornerRadius(10)
+                    .padding()
+                    .lineLimit(nil)
             }
             HStack {
                 Button(action: {
@@ -72,6 +82,13 @@ struct UserView: View {
             .background(Color.gray.opacity(0.2))
             
         }
+        .background(Color(hex: "#E3DCD5"))
+        .navigationTitle("Profile")
+        .font (
+            .custom(
+                "Menlo",
+                fixedSize: 15))
+            .foregroundColor(Color(hex: "#6F4E37"))
     }
 }
 

@@ -9,6 +9,10 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             VStack {
+                Text("Book Manager")
+                    .font(.custom("Georgia", size: 40))
+                    .foregroundColor(Color(hex: "#6F4E37"))
+                    .padding(.top, 16)
                 SearchBar(text: $searchText, onSearch: fetchBooks)
                 
                 List(viewModel.books) { book in
@@ -16,9 +20,6 @@ struct SearchView: View {
                         BookRow(book: book)
                     }
                 }
-                .navigationTitle("Book Manager")
-                .listStyle(PlainListStyle()) 
-                
                 HStack {
                     Button(action: {
                         isPresented = false
@@ -48,7 +49,13 @@ struct SearchView: View {
                     }
                     .padding()
                 }
+                .font (
+                    .custom(
+                        "Menlo",
+                        fixedSize: 15))
+                    .foregroundColor(Color(hex: "#6F4E37"))
             }
+            .background(Color(hex: "#E3DCD5"))
         }
     }
     
@@ -170,7 +177,10 @@ struct AddReviewView: View {
     var body: some View {
         VStack(spacing: 5) {
             Text("Type Review")
-                            .font(.headline)
+                            .font(
+                                .custom(
+                                    "Menlo",
+                                    fixedSize: 16))
                             .padding(.top, 20)
             
             TextEditor(text: $review)
@@ -180,6 +190,7 @@ struct AddReviewView: View {
                         
                         TextField("Give Rating", text: $rating)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .frame(maxWidth: 325)
                         
                         Button(action: {
                             userManager.addBook(user: "Dylan", book: book, rate: Int(rating) ?? 10)
@@ -190,9 +201,16 @@ struct AddReviewView: View {
                             
                         }, label: {
                             Text("Add Review")
+                                .font(
+                                    .custom(
+                                        "Menlo",
+                                        fixedSize: 16))
+                                .padding(.top, 10)
+                                .padding(.bottom, 10)
                         })
                         
                     }
+                    .background(Color(hex: "#E3DCD5"))
                     .padding()
     }
 }
