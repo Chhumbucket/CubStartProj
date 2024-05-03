@@ -13,6 +13,15 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
+                Image("quotes")
+                    .resizable()
+                    .frame(width: 100, height: 60)
+                    .padding(.top, 5)
+                Text("Quotify")
+                    .font(.custom("Georgia", size: 50))
+                    .foregroundColor(Color(hex: "#6F4E37"))
+                    .padding(.top, 1)
+                
                 Picker(selection: $selectedTab, label: Text("Tab")) {
                     Text("Books").tag(Tab.books)
                     Text("Reviews").tag(Tab.reviews)
@@ -70,7 +79,11 @@ struct ContentView: View {
                 .background(Color.gray.opacity(0.2))
             }
             .background(Color(hex: "#E3DCD5"))
-            .navigationTitle("Quotify")
+            .font (
+                .custom(
+                    "Menlo",
+                    fixedSize: 15))
+                .foregroundColor(Color(hex: "#6F4E37"))
         }
     }
 }
