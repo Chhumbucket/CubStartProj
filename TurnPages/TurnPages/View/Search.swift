@@ -17,7 +17,7 @@ struct SearchView: View {
                     }
                 }
                 .navigationTitle("Book Manager")
-                .listStyle(PlainListStyle()) // Use PlainListStyle to remove default list appearance
+                .listStyle(PlainListStyle()) 
                 
                 HStack {
                     Button(action: {
@@ -115,12 +115,6 @@ struct BookDetailView: View {
                 
                 Text(book.description)
                     .padding(.top, 20)
-                
-                Text("\(book.rating)")
-                    .padding(.top, 20)
-                
-                Text("\(book.ratingCount)")
-                    .padding(.top, 20)
             }
             .padding()
         }
@@ -128,8 +122,7 @@ struct BookDetailView: View {
         .navigationBarItems(trailing:
                         NavigationLink(destination: AddReviewView(book: book)) {
                             Image(systemName: "plus")
-                        }
-                    )
+                        })
     }
 }
 
@@ -170,11 +163,37 @@ struct BookImageView: View {
 
 struct AddReviewView: View {
     let book: Book
-    
+    @State private var userManager = FdManager()
+    @State var review = ""
+    @State var rating = ""
+    //userManager.addData(user: "Dylan", book: Book)
     var body: some View {
-        Text("Add Review for \(book.title)")
-            .padding()
-            .navigationTitle("Add Review")
+        VStack(spacing: 5) {
+            Text("Type Review")
+                            .font(.headline)
+                            .padding(.top, 20)
+            
+            TextEditor(text: $review)
+                            .frame(minHeight: 100)
+                            .border(Color.gray, width: 1)
+                            .padding()
+                        
+                        TextField("Give Rating", text: $rating)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                        Button(action: {
+                            userManager.addBook(user: "Nicolette", book: book, rate: Int(rating) ?? 10)
+                            userManager.addReview(user: "Nicolette", book: book, review: review, rating: Int(rating) ??  10)
+                    
+                            review = ""
+                            rating = ""
+                            
+                        }, label: {
+                            Text("Add Review")
+                        })
+                        
+                    }
+                    .padding()
     }
 }
 

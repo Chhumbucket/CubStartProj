@@ -33,7 +33,7 @@ struct ContentView: View {
                 case .books:
                     BookView(books: filteredBooks)
                 case .reviews:
-                    userReviewView()
+                    UserReviewView()
                 case .journals:
                     JournalView()
                 }
@@ -85,35 +85,75 @@ struct ContentView: View {
     }
 }
 
-struct userReviewView: View {
+// Maybe it navigationview so you can click and read // add borders around reviews
+//Add later  
+struct UserReviewView: View {
     @State private var userManager = FdManager()
     
     var body: some View {
-            List(userManager.users) { user in
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(user.name)
-                        .font(.headline)
-                    
-                    ForEach(user.reviews, id: \.self) { review in
-                        VStack(alignment: .leading) {
-                            Text("Book: \(review.book)")
-                                .font(.subheadline)
-                            Text("Author: \(review.author)")
-                                .font(.subheadline)
-                            Text("Rating: \(review.rating)")
-                                .font(.subheadline)
-                            Text("Review: \(review.review)")
-                                .font(.subheadline)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                ForEach(userManager.users) { user in
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(user.name)
+                            .font(.headline)
+                        
+                        ForEach(user.reviews, id: \.self) { review in
+                            HStack(spacing: 12) {
+                                // Display thumbnail image using AsyncImage
+                                AsyncImage(url: URL(string: review.thumbnailUrl)) { phase in
+                                    switch phase {
+                                    case .empty:
+                                        ProgressView()
+                                            .frame(width: 50, height: 50)
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 50, height: 50)
+                                    case .failure:
+                                        Image(systemName: "book")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 50, height: 50)
+                                    @unknown default:
+                                        ProgressView()
+                                            .frame(width: 50, height: 50)
+                                    }
+                                }
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("Book: \(review.title)")
+                                        .font(.subheadline)
+                                    
+                                    Text("Author: \(review.authors.joined(separator: ", "))")
+                                        .font(.subheadline)
+                                    
+                                    Text("Rating: \(review.rating)")
+                                        .font(.subheadline)
+                                    
+                                    Text("Review: \(review.review)")
+                                        .font(.subheadline)
+                                        .fixedSize(horizontal: false, vertical: true) // Allow multiline text
+                                }
+                                .padding(.trailing, 8)
+                            }
+                            .padding(.vertical, 8)
                         }
                     }
+                    .padding(.horizontal)
+                    .padding(.bottom, 16)
                 }
-                .padding()
             }
-            .task {
-                await userManager.fetchAllUsers()
-            }
+            .padding(.top)
+        }
+        .onAppear {
+            userManager.addSnapshotListenerToUser()
         }
     }
+}
+
+
 
 
 struct BookView: View {

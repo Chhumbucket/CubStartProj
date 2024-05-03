@@ -11,14 +11,18 @@ struct User: Codable, Identifiable {
     var id: Int
     var name: String
     var reviews: [Review]
+    var savedBooks: [SavedBook]
 }
 
 struct Review: Codable, Hashable {
-    var author: String
-    var book: String
+    var authors: [String]
+    var title: String
     var rating: Int
     var review: String
+    var id: String
+    var thumbnailUrl: String
 }
+
 
 
 

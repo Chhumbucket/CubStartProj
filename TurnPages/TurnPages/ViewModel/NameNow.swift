@@ -2,7 +2,12 @@ import SwiftUI
 import Combine
 
 class BookViewModel: ObservableObject {
-    @Published var books: [Book] = []
+    var books: [Book] = []
+    
+    
+    init(books: [Book] = [Book]()) {
+        self.books = books
+    }
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -23,8 +28,7 @@ class BookViewModel: ObservableObject {
                              authors: $0.volumeInfo.authors ?? [],
                              description: $0.volumeInfo.description ?? "",
                              thumbnailURL: URL(string: $0.volumeInfo.imageLinks?.thumbnail ?? ""),
-                             rating: $0.volumeInfo.rating ?? 0,
-                             ratingCount: $0.volumeInfo.ratingCount ?? 0)
+                             rating: $0.volumeInfo.rating ?? 0)
                     }
                   })
             .store(in: &cancellables)
