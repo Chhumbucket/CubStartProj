@@ -173,6 +173,7 @@ struct AddReviewView: View {
     @State private var userManager = FdManager()
     @State var review = ""
     @State var rating = ""
+    @Environment(\.presentationMode) var presentationMode
     //userManager.addData(user: "Dylan", book: Book)
     var body: some View {
         VStack(spacing: 5) {
@@ -198,7 +199,7 @@ struct AddReviewView: View {
                     
                             review = ""
                             rating = ""
-                            
+                            presentationMode.wrappedValue.dismiss()
                         }, label: {
                             Text("Add Review")
                                 .font(
